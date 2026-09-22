@@ -183,6 +183,7 @@ a{ color:inherit; text-underline-offset:.22em; text-decoration-thickness:1px; }
   width:100%;
   border:1px solid rgba(243,244,242,.22);
 }
+.portrait img{ height:auto; object-fit:cover; }
 
 .portrait__empty{
   display:grid; place-items:center;

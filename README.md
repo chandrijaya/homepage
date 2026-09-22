@@ -9,7 +9,7 @@ contact.html        contact details
 portfolio.html      case studies in preparation
 assets/css/style.css
 assets/js/keys.js   career keyboard only; the page works without it
-assets/img/         put portrait.jpg here
+assets/img/         portrait.jpg (hero), piano.jpg (original)
 ```
 
 ## Deploy to GitHub Pages
@@ -22,18 +22,26 @@ branch**, branch `master`, folder `/ (root)`. The site appears at
 Paths are all relative, so the site also works from a subfolder or a custom
 domain without changes.
 
-## Adding your photo
+## The photo
 
-1. Save a portrait as `assets/img/portrait.jpg`. Portrait orientation, 3:4,
-   at least 900 x 1200 pixels.
-2. Open `index.html` and find the block marked `PHOTO GOES HERE`.
-3. Uncomment the `<img>` line and delete the `<div class="portrait__empty">`
-   block underneath it.
-4. Change or remove the `<figcaption>` text.
+`assets/img/portrait.jpg` is the hero image: 1200 x 1600, cropped 3:4 and
+desaturated so it sits with the rest of the palette. `assets/img/piano.jpg` is
+the untouched 3000 x 4000 original it came from.
 
-Until then the frame shows a faint key pattern and the caption
-"Photograph to follow", which is a deliberate placeholder rather than a
-broken image.
+To swap in a different photo, replace `portrait.jpg` with another 3:4 image
+and update the `alt` text and `<figcaption>` in `index.html`. The CSS uses
+`object-fit: cover`, so a slightly different ratio will still fill the frame
+without distorting.
+
+To regenerate the crop from the original with different framing:
+
+```python
+from PIL import Image, ImageOps
+im = Image.open("assets/img/piano.jpg")                 # 3000 x 4000
+c  = im.crop((700, 1120, 2750, 3853)).resize((1200, 1600), Image.LANCZOS)
+g  = ImageOps.autocontrast(ImageOps.grayscale(c), cutoff=1)
+g.convert("RGB").save("assets/img/portrait.jpg", quality=88, optimize=True)
+```
 
 ## The design
 
@@ -65,7 +73,8 @@ Everything here is either original or openly licensed.
 | Bodoni Moda | Google Fonts | SIL Open Font License 1.1 |
 | Jost | Google Fonts | SIL Open Font License 1.1 |
 | JetBrains Mono | Google Fonts | SIL Open Font License 1.1 |
-| Keyboard, felt strip, key pattern, all other graphics | drawn in CSS for this site | yours |
+| Keyboard, felt strip, all other graphics | drawn in CSS for this site | yours |
+| portrait.jpg, piano.jpg | your own photograph | yours |
 
 There are no third-party images, icon fonts, CSS frameworks or JavaScript
 libraries, so there is nothing else to attribute and no commercial-use
